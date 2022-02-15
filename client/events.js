@@ -1,14 +1,19 @@
-window.sendEvent = (action, data) => {
+window.sendEvent = (event_type, data) => {
   eventBody = {
-    url: window.location.href,
-    action: action,
+    event_type: event_type,
+    from_url: window.location.href,
     details: { ...data },
   };
   console.log(eventBody);
+  fetch("https://<api-id>.execute-api.eu-west-1.amazonaws.com/prod/events", {
+    headers: { "content-type": "application/json" },
+    method: "POST",
+    body: JSON.stringify(eventBody),
+  });
 };
 
 window.onload = () => {
-  sendEvent("load", null);
+  sendEvent("page_load", {});
 };
 
 document.addEventListener(

@@ -24,9 +24,11 @@ The `cdk.json` file tells the CDK Toolkit how to execute your app.
 You can post events to the API by posting the following JS in your browser console, from https://klimatriksdagen.se
 
 ```
-fetch("https://<api-id>.execute-api.eu-west-1.amazonaws.com/prod/events", {headers: {"content-type": "application/json"}, method: "POST", body: {"someKey": "someVal"}})
+fetch("https://<api-id>.execute-api.eu-west-1.amazonaws.com/prod/events", {headers: {"content-type": "application/json"}, method: "POST", body: JSON.stringify({"event_type": "page_load", "from_url": window.location.href, "details": {}})})
 ```
 
 ## Utils
 
 For SSO AWS login utility, integrated with CDK: https://github.com/victorskl/yawsso
+
+
