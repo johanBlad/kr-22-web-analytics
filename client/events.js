@@ -2,19 +2,19 @@ window.sendEvent = (event_type, data) => {
   eventBody = {
     event_type: event_type,
     from_url: window.location.href,
-    details: { ...data },
+    details: data,
   };
-  console.log(eventBody);
-  fetch("https://<api-id>.execute-api.eu-west-1.amazonaws.com/prod/events", {
+  console.log("post event:", eventBody)
+  fetch("https://yabj0agl39.execute-api.eu-west-1.amazonaws.com/prod/events", {
     headers: { "content-type": "application/json" },
     method: "POST",
     body: JSON.stringify(eventBody),
   });
 };
 
-window.onload = () => {
-  sendEvent("page_load", {});
-};
+window.addEventListener("load", () => {
+  window.sendEvent("page_load", {});
+});
 
 document.addEventListener(
   "click",

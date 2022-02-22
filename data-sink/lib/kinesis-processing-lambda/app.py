@@ -74,13 +74,14 @@ def process_record(record: Dict) -> Optional[Dict]:
         except Exception:
             logger.error("Failed to set data from user agent", exc_info=True)
 
-    user_data["geoip"] = get_geo_from_ip(identity["sourceIp"])
+    
     ip = identity["sourceIp"]
     ua = identity["userAgent"]
-    user_data["fingerprint"] = hashlib.md5((ip + ua).encode("utf-8")).hexdigest()
     user_data["device_type"] = get_device_type(headers)
 
     body["user_data"] = user_data
+    body["fingerprint"] = hashlib.md5((ip + ua).encode("utf-8")).hexdigest()
+    body["geoip"] = get_geo_from_ip(identity["sourceIp"])
 
     # Body: {record["body"]: Dict, request_time: timestamp, event_id: str, user_data: Dict}
     return body

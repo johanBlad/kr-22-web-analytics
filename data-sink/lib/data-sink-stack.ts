@@ -7,7 +7,6 @@ import * as lambda from "@aws-cdk/aws-lambda";
 import * as logs from "@aws-cdk/aws-logs";
 import * as apigateway from "@aws-cdk/aws-apigateway";
 import dedent from "ts-dedent";
-import { table } from "console";
 
 export class DataSinkStack extends cdk.Stack {
   constructor(scope: cdk.App, id: string, props?: cdk.StackProps) {
@@ -50,11 +49,13 @@ export class DataSinkStack extends cdk.Stack {
           bucketColumns: ["bucketColumns"],
           columns: [
             { name: "event_id", type: "string" },
+            { name: "fingerprint", type: "string" },
+            { name: "request_time", type: "string" },
             { name: "event_type", type: "string" },
             { name: "from_url", type: "string" },
             { name: "details", type: "string" },
-            { name: "request_time", type: "string" },
             { name: "user_data", type: "string" },
+            { name: "geoip", type: "string" },
           ],
           inputFormat: "org.apache.hadoop.mapred.TextInputFormat",
           outputFormat:
@@ -106,7 +107,7 @@ export class DataSinkStack extends cdk.Stack {
           bucketArn: bucket.bucketArn,
           roleArn: firehoseRole.roleArn,
           bufferingHints: {
-            intervalInSeconds: 60,
+            intervalInSeconds: 900,
             sizeInMBs: 128,
           },
           cloudWatchLoggingOptions: {
