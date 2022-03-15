@@ -2,7 +2,7 @@ with events_days_complete as (
     select *
     from "kr22_web_event_table"
     where date_day >= '2022-02-17'
-        and date_day < '2022-03-06'
+        and date(date_day) < current_date
 ),
 session_start_events as (
     select *,
@@ -79,6 +79,14 @@ events_final as (
         json_extract_scalar(e.user_data, '$.operating_system') as operating_system,
         json_extract_scalar(e.geoip, '$.city') as city,
         json_extract_scalar(json_extract(e.geoip, '$.country'), '$.name') as country,
+        date_diff(
+            'second',
+            from_iso8601_timestamp(request_time),
+            from_iso8601_timestamp(
+                lead(e.request_time) over (partition by s.session_id order by request_time asc)
+            )
+        ) as seconds_to_next_event_in_session,
+        extract(week from date(e.date_day)) as week,
         e.date_day
     from events_days_complete as e
         join sessions as s on e.fingerprint = s.fingerprint
