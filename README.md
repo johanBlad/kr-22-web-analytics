@@ -28,10 +28,12 @@ Interesting questions to answer are:
 ### Page statistics 
 - What pages are the most common start of each session?
 - What pages are the most common end of each session?
-- What pages has the longest read time?
+- What pages have the longest read time?
 - What pages are most common visisted pages overall?
 - What pages are the most common visisted pages over sessions? 
-- What pages are the most common visisted pages over unique users? 
+- What pages are the most common visisted pages over unique users?
+- What ratio of sessions come in from Facebook
+- Of visitors coming from Facebook, what pages do they land on?
 
 ### Motion statistics 
 - What motions are most common visisted motions overall?
@@ -44,7 +46,7 @@ Interesting questions to answer are:
 - When splitting distributions of cities in 6 top cities + others, how is this developing over time?
 - When splitting distributions of countries in 6 top countries + others, how is this developing over time?
 
-### Devie type
+### Device type
 - What is the distribution between desktop and mobile for overall events?
 - What is the distribution between desktop and mobile for sessions?
 - What is the distribution between desktop and mobile for unique users?
