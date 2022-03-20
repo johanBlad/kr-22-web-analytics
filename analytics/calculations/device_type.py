@@ -1,4 +1,24 @@
 from calculations.common import calculate_session_stats
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+def plot_device_pie_chart(desktop_mobile_stats):
+    fig, ax = plt.subplots(1, 2, figsize=(15, 10))
+    colors = sns.color_palette('pastel')
+    ax[0].pie(
+        desktop_mobile_stats["Sidvisningar"],
+        labels=desktop_mobile_stats.index,
+        colors=colors[0 : len(desktop_mobile_stats)],
+        autopct="%.0f%%",
+    )
+    ax[0].set_title("All trafik över mobil och dator")
+    ax[1].pie(
+        desktop_mobile_stats["Sessioner"],
+        labels=desktop_mobile_stats.index,
+        colors=colors[2 : len(desktop_mobile_stats) + 2],
+        autopct="%.0f%%",
+    )
+    ax[1].set_title("Sessioner över mobil och dator")
 
 
 def calculate_desktop_mobile_stats(all_events):
@@ -17,6 +37,14 @@ def calculate_desktop_mobile_stats(all_events):
             "session_id": "nunique",
             "fingerprint": "nunique",
             "from_fb": sum,
+        }
+    )
+    desktop_mobile_stats = desktop_mobile_stats.rename(
+        columns={
+            "event_id": "Sidvisningar",
+            "session_id": "Sessioner",
+            "fingerprint": "Unika Besökare",
+            "from_fb": "Från Facebook",
         }
     )
 
